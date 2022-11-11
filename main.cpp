@@ -1,8 +1,8 @@
 #include <iostream>
 
 using namespace std;
-
-template<class Type>
+// task 1 implementation
+/*template<class Type>
 class queueType {
 public:
     bool isEmptyQueue() {
@@ -78,12 +78,78 @@ private:
     int queueFront;
     int queueRear;
     Type *list;
+};*/
+
+struct Node {
+    int data;
+    Node *next;
+
+    Node() {
+        next == NULL;
+    }
 };
 
+class LinkedList {
+private:
+    Node *head, *last;
+public:
+    LinkedList() {
+        head = NULL;
+        last = NULL;
+    }
 
+    void printAll() {
+        Node *temp = head;
+        while (temp) {
+            cout << temp->data << endl;
+            temp = temp->next;
+        }
+    }
+
+    bool isEmptyQueue() {
+        if (head) return true;
+        else return false;
+    }
+
+    void initializeQueue() {
+        Node *temp = head;
+        while (temp) {
+
+        }
+
+    }
+
+    int front() {
+        return head->data;
+    }
+
+    int back() {
+        return last->data;
+    }
+
+    void addQueue(int data) {
+        //Node *temp = head;
+        Node *newNode = new Node;
+        newNode->data = data;
+        newNode->next = NULL;
+        if (!head) {
+            head = newNode;
+            last = newNode;
+
+        } else {
+            last->next = newNode;
+            last = newNode;
+        }
+    }
+
+    void deleteQueue(){
+        head = head->next;
+    }
+};
 
 int main() {
-    queueType<int> Q1;
+    // task 1 testing
+    /*queueType<int> Q1;
     Q1.initializeQueue();
     cout << "Is the queue empty? " << Q1.isEmptyQueue() << endl; // output is 1 as it is empty for now
 
@@ -120,6 +186,17 @@ int main() {
 //Should display 35
     Q1.addQueue(3);
     Q1.printQueue();
-//Should display both 35 and 3
+//Should display both 35 and 3*/
+
+    // task 2 testing
+    LinkedList list;
+    list.addQueue(5);
+    list.addQueue(6);
+    list.deleteQueue();
+    /*for (int i = 0; i < 5; i++) {
+        list.addQueue(i);
+    }*/
+    list.printAll();
+
     return 0;
 }
