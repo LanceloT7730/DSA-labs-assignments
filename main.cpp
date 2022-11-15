@@ -2,7 +2,7 @@
 
 using namespace std;
 // task 1 implementation
-/*template<class Type>
+template<class Type>
 class queueType {
 public:
     bool isEmptyQueue() {
@@ -78,11 +78,12 @@ private:
     int queueFront;
     int queueRear;
     Type *list;
-};*/
+};
 
 struct Node {
     int data;
     Node *next;
+    string data_string;
 
     Node() {
         next = NULL;
@@ -124,7 +125,7 @@ public:
             temp = head;
         }*/
         int i = 0;
-        while(i < count) {
+        while (i < count) {
             deleteQueue();
             i++;
         }
@@ -155,14 +156,14 @@ public:
         }
     }
 
-    void deleteQueue(){
+    void deleteQueue() {
         Node *temp = head;
         head = head->next;
         delete temp;
         count--;
     }
 
-    void copyListQueue(LinkedListQueue OtherListQueue){
+    void copyListQueue(LinkedListQueue OtherListQueue) {
         Node *temp = new Node;
         temp = OtherListQueue.head;
 
@@ -172,10 +173,41 @@ public:
             temp = temp->next;
         }
     }
-    // Copy function not working inside constructor
-    LinkedListQueue(const LinkedListQueue *OtherLinkedListQueue){
-        copyListQueue(OtherLinkedListQueue);
 
+    // Copy function not working inside constructor
+    LinkedListQueue(const LinkedListQueue *OtherLinkedListQueue) {
+        copyListQueue(OtherLinkedListQueue);
+    }
+
+    void addQueue(string data_string, int priority) {
+        Node *newNode = new Node;
+        newNode->data_string = data_string;
+        Node *curr = head;
+        Node *prev = NULL;
+        //bool stop = false;
+
+        // if(newNode->data < curr->data)
+        //      newNode->next = prev->next
+        //      prev->next = newNode
+        //      stop = true
+        //
+        // else {
+        //      prev = curr
+        //      curr = curr->next
+        //      stop = false
+        while(curr) {
+            if(priority > curr->data) {
+                newNode->next = prev->next;
+                prev->next = newNode;
+                count++;
+                break;
+            } else {
+                prev = curr;
+                curr = curr->next;
+            }
+        }
+        head = newNode;
+        count++;
     }
 };
 
@@ -240,5 +272,12 @@ int main() {
     cout << "After initialization\n";
     list_queue_2.printAll();
 
+    cout << "Testing ordered queue adding" << endl;
+    LinkedListQueue Q1;
+    Q1.addQueue("AAA", 0);
+    Q1.addQueue("AAB", 0);
+    Q1.addQueue("AAC", 0);
+    Q1.addQueue("AAD", 3);
+    Q1.printAll();
     return 0;
 }
