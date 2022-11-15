@@ -85,15 +85,16 @@ struct Node {
     Node *next;
 
     Node() {
-        next == NULL;
+        next = NULL;
     }
 };
 
-class LinkedList {
+class LinkedListQueue {
 private:
     Node *head, *last;
+    int count = 0;
 public:
-    LinkedList() {
+    LinkedListQueue() {
         head = NULL;
         last = NULL;
     }
@@ -112,38 +113,68 @@ public:
     }
 
     void initializeQueue() {
-        Node *temp = head;
+        /*head = NULL;
+        last = NULL;
+        count = NULL;*/
+        /*Node *temp = head;
+
         while (temp) {
-
+            head = head->next;
+            delete temp;
+            temp = head;
+        }*/
+        int i = 0;
+        while(i < count) {
+            deleteQueue();
+            i++;
         }
-
     }
 
     int front() {
+        cout << "Front: " << head->data << endl;
         return head->data;
     }
 
     int back() {
+        cout << "Back: " << last->data << endl;
         return last->data;
     }
 
     void addQueue(int data) {
-        //Node *temp = head;
         Node *newNode = new Node;
         newNode->data = data;
         newNode->next = NULL;
         if (!head) {
             head = newNode;
             last = newNode;
-
+            count++;
         } else {
             last->next = newNode;
             last = newNode;
+            count++;
         }
     }
 
     void deleteQueue(){
+        Node *temp = head;
         head = head->next;
+        delete temp;
+        count--;
+    }
+
+    void copyListQueue(LinkedListQueue OtherListQueue){
+        Node *temp = new Node;
+        temp = OtherListQueue.head;
+
+        while (temp) {
+            addQueue(temp->data);
+            count++;
+            temp = temp->next;
+        }
+    }
+    // Copy function not working inside constructor
+    LinkedListQueue(const LinkedListQueue *OtherLinkedListQueue){
+        copyListQueue(OtherLinkedListQueue);
     }
 };
 
@@ -189,14 +220,24 @@ int main() {
 //Should display both 35 and 3*/
 
     // task 2 testing
-    LinkedList list;
-    list.addQueue(5);
-    list.addQueue(6);
-    list.deleteQueue();
-    /*for (int i = 0; i < 5; i++) {
-        list.addQueue(i);
-    }*/
-    list.printAll();
+    LinkedListQueue list_queue;
+    list_queue.addQueue(5);
+    list_queue.addQueue(6);
+    list_queue.deleteQueue();
+    for (int i = 0; i < 5; i++) {
+        list_queue.addQueue(i);
+    }
+    list_queue.printAll();
+    list_queue.front();
+    list_queue.back();
+
+    LinkedListQueue list_queue_2;
+    cout << "Copied queue elements\n";
+    list_queue_2.copyListQueue(list_queue);
+    list_queue_2.printAll();
+    list_queue_2.initializeQueue();
+    cout << "After initialization\n";
+    list_queue_2.printAll();
 
     return 0;
 }
