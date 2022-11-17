@@ -132,14 +132,11 @@ public:
     void pop() {
         if (!isStackEmpty()) {
             Node<Type> *temp = top;
-            //while (temp) {
             top = top->next;
             delete temp;
             temp = top;
             count--;
-            //}
         } else cout << "Cannot delete element from empty list\n";
-
     }
 
     Type Top() {
@@ -174,7 +171,7 @@ public:
         for (char &i: data) push(i);
 
         // checking if the num of characters is odd or even
-        if(data.size() % 2 == 0) {
+        if (data.size() % 2 == 0) {
             for (char &i: data) {
                 if (top->data == i) {
                     answer = true;
@@ -234,10 +231,12 @@ int main() {
     cout << "Number of elements in stack: " << stack.CountStackElements() << endl;
 
     string palindrome = "Something";
-    cout << "Checking whether a string " << palindrome <<  " is palindrome or not: " << stack.isPalindrome(palindrome) << endl;
+    cout << "Checking whether a string " << palindrome << " is palindrome or not: " << stack.isPalindrome(palindrome)
+         << endl;
 
     palindrome = "ACCA";
-    cout << "Checking whether a string " << palindrome <<  " is palindrome or not: " << stack.isPalindrome(palindrome) << endl;
+    cout << "Checking whether a string " << palindrome << " is palindrome or not: " << stack.isPalindrome(palindrome)
+         << endl;
 
     return 0;
 }
