@@ -3,10 +3,9 @@
 using namespace std;
 
 
-
 // task 1
 // what is the difference between typename and class in template
-template <class Type>
+template<class Type>
 class StackType {
 public:
     StackType(int stackSize = 10) {
@@ -27,8 +26,9 @@ public:
     bool isStackFull() {
         return count == maxStackSize;
     }
+
     void push(Type data) {
-        if(!isStackFull()) {
+        if (!isStackFull()) {
             stackTop++;
             list[stackTop] = data;
             count++;
@@ -36,8 +36,9 @@ public:
             cout << "Cannot add to full stack" << endl;
         }
     }
-    void pop(){
-        if(!isStackEmpty()) {
+
+    void pop() {
+        if (!isStackEmpty()) {
             stackTop--;
             count--;
         } else {
@@ -49,7 +50,7 @@ public:
         return list[stackTop];
     }
 
-    int CountStackElements(){
+    int CountStackElements() {
         return count;
     }
 
@@ -65,6 +66,10 @@ public:
         }
     }
 
+    ~StackType() {
+        delete[]list;
+    }
+
 private:
     int stackTop;
     int maxStackSize;
@@ -72,27 +77,88 @@ private:
     Type *list;
 };
 
-template <class Type>
+template<class Type>
 struct Node {
     Type data;
-    Node <Type> *next;
-    string data_string;
+    Node<Type> *next;
 
     Node() {
         next = NULL;
     }
 };
-template <class Type>
+
+template<class Type>
 class LinkedListStack {
 private:
-    Node <Type> *head;
-    int count = 0;
+    Node<Type> *top;
+    int count;
+
 public:
     LinkedListStack() {
-        head = NULL;
+        top = NULL;
+        count = 0;
+    }
+
+    void CreateStack() {
+        if (!isStackEmpty()) {
+            Node<Type> *temp = top;
+            while (!temp) {
+                top = top->next;
+                delete temp;
+                temp = top;
+            }
+        } else cout << "Cannot delete element from empty list\n";
+
+    }
+
+    bool isStackEmpty() {
+        return count == 0;
+    }
+
+    void push(Type data) {
+        Node<Type> *newNode = new Node<Type>;
+        newNode->data = data;
+
+        if (isStackEmpty()) {
+            newNode->next = NULL;
+            top = newNode;
+            count++;
+        } else {
+            newNode->next = top;
+            top = newNode;
+            count++;
+        }
+    }
+
+    void pop() {
+        if (!isStackEmpty()) {
+            Node<Type> *temp = top;
+            while (temp) {
+                top = top->next;
+                delete temp;
+                temp = top;
+            }
+        }
+        else cout << "Cannot delete element from empty list\n";
+
+    }
+
+    Type Top() {
+        return top->data;
+    }
+
+    void printAll() {
+        Node<Type> *temp = top;
+
+        while (temp) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
     }
 
 };
+
 int main() {
     // testing task 1
     /*StackType<char> stack;
@@ -104,5 +170,26 @@ int main() {
     }
     cout << "Result: ";
     stack.printAll();*/
+
+    // testing task 1
+    LinkedListStack<int> stack;
+    cout << "Is stack empty: " << stack.isStackEmpty() << endl;
+
+    cout << "Adding elements to the stack\n";
+    stack.push(5);
+    cout << "Is stack empty: " << stack.isStackEmpty() << endl;
+
+    for (int i = 0; i < 10; i++) {
+        stack.push(i);
+    }
+    cout << "Stack elements are\n";
+    stack.printAll();
+
+    cout << "Top element is: " << stack.Top() << endl;
+
+    cout << "Deleting elements from the stack\n";
+    stack.pop();
+    cout << "Stack elements are\n";
+    stack.printAll();
     return 0;
 }
