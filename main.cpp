@@ -2,7 +2,7 @@
 
 using namespace std;
 
-struct Node {
+/*struct Node {
     int data;
     Node *next;
 
@@ -99,9 +99,15 @@ public:
             if (temp == newNode->next) temp = newNode;
         } while (temp);
     }
+};*/
+// Create a program that takes name of a user and print it in reverse order.
+template<class Type>
+class stackType{
+
 };
 
 int main() {
+/*
     // testing task 1
     List obj;
     obj.insertAtFront(5);
@@ -122,6 +128,7 @@ int main() {
     obj_circular.CircularFrontInsertion(6);
     obj_circular.CircularFrontInsertion(6);
     obj_circular.printAll();
+*/
 
     return 0;
 }
